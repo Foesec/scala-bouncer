@@ -1,12 +1,10 @@
-package org.flxkbr.bouncer
-package auth.basic
+package org.flxkbr.bouncer.auth.basic
 
-import auth.AuthorizationFailure
-
+import org.flxkbr.bouncer.auth.AuthorizationFailure
 import zio.test.Assertion._
 import zio.test._
 
-class BooleanPermissionSpec extends DefaultRunnableSpec {
+object BooleanPermissionSpec extends DefaultRunnableSpec {
 
   val okCheck: () => Boolean   = () => true
   val failCheck: () => Boolean = () => false

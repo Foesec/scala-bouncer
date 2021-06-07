@@ -1,8 +1,6 @@
-package org.flxkbr.bouncer
-package auth
+package org.flxkbr.bouncer.auth
 
-import auth.basic.BooleanTotalPermission
-
+import org.flxkbr.bouncer.auth.basic.BooleanTotalPermission
 import zio.{Has, ULayer, ZIO, ZLayer}
 
 trait Auth {

@@ -1,7 +1,6 @@
-package org.flxkbr.bouncer
-package auth.basic
+package org.flxkbr.bouncer.auth.basic
 
-import auth.AuthorizationFailure
+import org.flxkbr.bouncer.auth.AuthorizationFailure
 
 case class BasicAuthorizationFailure(message: String) extends AuthorizationFailure
 

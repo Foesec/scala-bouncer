@@ -1,8 +1,6 @@
-package org.flxkbr.bouncer
-package auth.basic
+package org.flxkbr.bouncer.auth.basic
 
-import auth.{AuthIO, Permission}
-
+import org.flxkbr.bouncer.auth.{AuthIO, Permission}
 import zio.{IO, Task}
 
 case class BooleanEffectPermission(

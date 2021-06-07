@@ -1,5 +1,4 @@
-package org.flxkbr.bouncer
-package auth
+package org.flxkbr.bouncer.auth
 
 trait Permission {
   def isAuthorized: AuthIO
