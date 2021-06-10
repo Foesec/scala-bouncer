@@ -1,5 +1,7 @@
 package org.flxkbr.bouncer.auth
 
-trait Permission {
-  def isAuthorized: AuthIO
+import zio.IO
+
+trait Permission[E] {
+  def isAuthorized: IO[E, Unit]
 }

@@ -1,7 +1,6 @@
 package org.flxkbr.bouncer.auth.basic
 
-import org.flxkbr.bouncer.auth.AuthorizationFailure
+sealed trait AuthorizationFailure
 
-case class BasicAuthorizationFailure(message: String) extends AuthorizationFailure
-
-case class EvaluationFailure(cause: Throwable) extends AuthorizationFailure
+case class BasicAuthorizationCheckFailure(message: String) extends AuthorizationFailure
+case class EvaluationFailure(cause: Throwable)             extends AuthorizationFailure

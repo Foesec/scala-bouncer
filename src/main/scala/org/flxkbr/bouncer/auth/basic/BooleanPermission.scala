@@ -1,43 +1,37 @@
 package org.flxkbr.bouncer.auth.basic
 
-import org.flxkbr.bouncer.auth.{AuthIO, Permission}
+import org.flxkbr.bouncer.auth.Permission
 import zio.{IO, Task}
 
 case class BooleanEffectPermission(
     check: () => Boolean,
     message: String = "Authorization failed. Check not passed"
-) extends Permission {
-  override def isAuthorized: AuthIO =
+) extends Permission[AuthorizationFailure] {
+  override def isAuthorized: IO[AuthorizationFailure, Unit] =
     for {
       res <- IO.effect(check()).mapError(EvaluationFailure)
-      _ <-
-        if (res) IO.unit
-        else IO.fail(BasicAuthorizationFailure(message))
+      _   <- IO.fail(BasicAuthorizationCheckFailure(message)).unless(res)
     } yield ()
 }
 
 case class BooleanTotalPermission(
     check: () => Boolean,
     message: String = "Authorization failed. Check not passed"
-) extends Permission {
-  override def isAuthorized: AuthIO =
+) extends Permission[AuthorizationFailure] {
+  override def isAuthorized: IO[AuthorizationFailure, Unit] =
     for {
       res <- IO.effectTotal(check())
-      _ <-
-        if (res) IO.unit
-        else IO.fail(BasicAuthorizationFailure(message))
+      _   <- IO.fail(BasicAuthorizationCheckFailure(message)).unless(res)
     } yield ()
 }
 
 case class BooleanTaskPermission(
     check: Task[Boolean],
     message: String = "Authorization failed. Check not passed"
-) extends Permission {
-  override def isAuthorized: AuthIO =
+) extends Permission[AuthorizationFailure] {
+  override def isAuthorized: IO[AuthorizationFailure, Unit] =
     for {
       res <- check.mapError(EvaluationFailure)
-      _ <-
-        if (res) IO.unit
-        else IO.fail(BasicAuthorizationFailure(message))
+      _   <- IO.fail(BasicAuthorizationCheckFailure(message)).unless(res)
     } yield ()
 }

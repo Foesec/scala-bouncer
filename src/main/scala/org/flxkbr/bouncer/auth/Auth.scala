@@ -1,15 +1,15 @@
 package org.flxkbr.bouncer.auth
 
-import org.flxkbr.bouncer.auth.basic.BooleanTotalPermission
-import zio.{Has, ULayer, ZIO, ZLayer}
+import org.flxkbr.bouncer.auth.basic.{AuthorizationFailure, BooleanTotalPermission}
+import zio.{Has, IO, ULayer, ZIO, ZLayer}
 
 trait Auth {
-  def authorize(permission: Permission): AuthIO
+  def authorize[E](permission: Permission[E]): IO[E, Unit]
 }
 
 object Auth {
 
-  def authorize(permission: Permission): ZIO[Has[Auth], AuthorizationFailure, Unit] =
+  def authorize[E](permission: Permission[E]): ZIO[Has[Auth], E, Unit] =
     ZIO.serviceWith[Auth](_.authorize(permission))
 
   object basic {
@@ -23,7 +23,7 @@ object Auth {
 }
 
 case class AuthLive() extends Auth {
-  override def authorize(permission: Permission): AuthIO =
+  override def authorize[E](permission: Permission[E]): IO[E, Unit] =
     permission.isAuthorized
 }
 

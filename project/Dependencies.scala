@@ -11,8 +11,6 @@ object Dependencies {
   )
 
   private val test = Seq(
-//    "org.scalactic" %% "scalactic"    % "3.2.9",
-//    "org.scalatest" %% "scalatest"    % "3.2.9",
     "dev.zio"       %% "zio-test"     % zioVersion,
     "dev.zio"       %% "zio-test-sbt" % zioVersion
   ).map(_ % "test")
